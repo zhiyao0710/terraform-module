@@ -63,15 +63,15 @@ jobs:
 
       - name: Terraform Init
         run: terraform init -reconfigure
-        working-directory: envs/dev
+        working-directory: envs/Dev
 
       - name: Terraform Validate
         run: terraform validate
-        working-directory: envs/dev
+        working-directory: envs/Dev
 
       - name: Terraform Plan
         run: terraform plan
-        working-directory: envs/dev
+        working-directory: envs/Dev
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main'&& github.event_name == 'push' 
