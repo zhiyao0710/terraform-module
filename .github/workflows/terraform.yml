@@ -78,12 +78,8 @@ jobs:
         run: terraform validate
         working-directory: envs/Dev
 
-      - name: Terraform Plan (debug)
-        run: terraform plan -lock-timeout=60s
-        working-directory: envs/Dev
-
       - name: Terraform Plan
-        run: terraform plan
+        run: terraform plan -input=false -lock=false
         working-directory: envs/Dev
 
       - name: Terraform Apply
