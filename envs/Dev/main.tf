@@ -26,6 +26,7 @@ module "web_ec2" {
   tags = {
     Name = "web-dev-${count.index}"
     Env  = "dev"
+    trigger = "workflow"
   }
 }
 
