@@ -43,6 +43,9 @@
 #         cli_config_credentials_token: ${{ secrets.TF_API_TOKEN }}
 
 name: Terraform CI
+permissions:
+  id-token: write
+  contents: read
 
 on:
   pull_request:
@@ -60,6 +63,12 @@ jobs:
       - uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.6.6
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::086877291478:role/githubaction-terraform
+          aws-region: us-east-1
 
       - name: Terraform Init
         run: terraform init -reconfigure
