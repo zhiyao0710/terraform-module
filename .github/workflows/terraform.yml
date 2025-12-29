@@ -79,6 +79,7 @@ jobs:
         working-directory: envs/Dev
 
       - name: Terraform Plan
+        if: github.event_name == 'pull_request'
         run: terraform plan -input=false -lock-timeout=60s -var-file=terraform.tfvars 
         working-directory: envs/Dev
 
