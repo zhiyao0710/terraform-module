@@ -17,26 +17,3 @@ module "web_ec2" {
     Env  = "prod"
   }
 }
-
-
-
-
-/* 
-module "web_ec2_test" {
-  source = "../../modules/ec2"
-
-  for_each = {
-    web1 = "t3.micro"
-    web2 = "t3.small"
-    web3 = "t3.micro"
-  }
-
-  ami           = var.ami
-  instance_type = each.value
-
-  tags = {
-    Name = each.key
-    Env  = "dev"
-  }
-} 
-*/
