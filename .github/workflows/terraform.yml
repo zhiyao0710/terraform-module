@@ -49,13 +49,18 @@ permissions:
 
 on:
   pull_request:
-    branches: [ main ]
+#    branches: [ main ]
   push:
     branches: [ main ]
 
 jobs:
   terraform:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        env: [Dev, stage, prod]
+    
+    environment: ${{ matrix.env }}
 
     steps:
       - uses: actions/checkout@v4
@@ -72,19 +77,18 @@ jobs:
 
       - name: Terraform Init
         run: terraform init -reconfigure
-        working-directory: envs/Dev
+        working-directory: envs/${{ matrix.env }}
 
       - name: Terraform Validate
         run: terraform validate
-        working-directory: envs/Dev
+        working-directory: envs/${{ matrix.env }}
 
       - name: Terraform Plan
-        if: github.event_name == 'pull_request'
-        run: terraform plan -input=false -lock-timeout=60s -var-file=terraform.tfvars 
-        working-directory: envs/Dev
-
+        run: terraform plan -input=false -lock-timeout=60s -var-file=terraform.tfvars
+        working-directory: envs/${{ matrix.env }}
+      
       - name: Terraform Apply
-        if: github.ref == 'refs/heads/main'&& github.event_name == 'push' 
+        if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         run: terraform apply -auto-approve -input=false -lock-timeout=60s -var-file=terraform.tfvars
-        working-directory: envs/Dev
+        working-directory: envs/${{ matrix.env }}
 
