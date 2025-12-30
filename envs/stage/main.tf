@@ -13,8 +13,8 @@ module "web_ec2" {
   security_group_ids    = [data.aws_security_group.web_sg.id]
 
   tags = {
-    Name = "web-prod"
-    Env  = "prod"
+    Name = "web-stage"
+    Env  = "stage"
   }
 }
 
