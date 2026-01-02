@@ -17,7 +17,4 @@ terraform {
 
 provider "aws" {
   region = var.region
-  #xiaoming access_key
-  #access_key = "AKIARIOSKIPLIKBOGTLJ"
-  #secret_key = "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"
 }
